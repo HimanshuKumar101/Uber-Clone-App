@@ -13,6 +13,14 @@ userController.registerUser
 )
 
 
+router.post('/login',
+    [
+        body('email').isEmail().withMessage('Invalid Email'),
+        body('password').isLength({ min: 6}).withMessage('Password must be same as the one you used to register ')
+    ], userController.loginUser
+)
+
+
 
 module.exports = router;
 
