@@ -234,3 +234,93 @@ This endpoint allows an authenticated user to log out.
     "message": "Internal server error"
   }
   ```
+
+# Captain Registration Endpoint
+
+## Endpoint
+`POST /captains/register`
+
+## Description
+This endpoint allows a new captain to register by providing their first name, last name, email, password, and vehicle details. The password will be hashed before storing in the database.
+
+## Request Body
+The request body should be a JSON object containing the following fields:
+- `fullname.firstname` (string, required): The first name of the captain. Must be at least 3 characters long.
+- `fullname.lastname` (string, optional): The last name of the captain. Must be at least 3 characters long if provided.
+- `email` (string, required): The email address of the captain. Must be a valid email format.
+- `password` (string, required): The password for the captain account. Must be at least 6 characters long.
+- `vehicle.color` (string, required): The color of the vehicle. Must be at least 3 characters long.
+- `vehicle.plate` (string, required): The plate number of the vehicle. Must be at least 3 characters long.
+- `vehicle.capacity` (number, required): The capacity of the vehicle. Must be at least 1.
+- `vehicle.vehicleType` (string, required): The type of the vehicle. Must be one of 'car', 'motorcycle', or 'auto'.
+- `vehicle.model` (string, required): The model of the vehicle.
+
+Example:
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car",
+    "model": "Toyota"
+  }
+}
+```
+
+## Responses
+
+### Success
+- **Status Code:** 201 Created
+- **Response Body:**
+  ```json
+  {
+    "token": "jwt_token_here",
+    "captain": {
+      "_id": "captain_id_here",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "vehicle": {
+        "color": "Red",
+        "plate": "ABC123",
+        "capacity": 4,
+        "vehicleType": "car",
+        "model": "Toyota"
+      }
+    }
+  }
+  ```
+
+### Validation Error
+- **Status Code:** 400 Bad Request
+- **Response Body:**
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message here",
+        "param": "field_name",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+### Server Error
+- **Status Code:** 500 Internal Server Error
+- **Response Body:**
+  ```json
+  {
+    "message": "Internal server error"
+  }
+  ```
+  
