@@ -1,87 +1,32 @@
-# User Registration Endpoint
+# User and Captain API Documentation
 
-## Endpoint
-`POST /users/register`
+## User Endpoints
 
-## Description
-This endpoint allows a new user to register by providing their first name, last name, email, and password. The password will be hashed before storing in the database.
+### User Registration
+**Endpoint:** `POST /users/register`
 
-## Request Body
-The request body should be a JSON object containing the following fields:
-- `fullname.firstname` (string, required): The first name of the user. Must be at least 3 characters long.
-- `fullname.lastname` (string, optional): The last name of the user. Must be at least 3 characters long if provided.
-- `email` (string, required): The email address of the user. Must be a valid email format.
-- `password` (string, required): The password for the user account. Must be at least 6 characters long.
+**Description:** Registers a new user.
 
-Example:
+**Request Body:**
 ```json
 {
-  "fullname": {
-    "firstname": "John",
-    "lastname": "Doe"
-  },
+  "fullname": {"firstname": "John", "lastname": "Doe"},
   "email": "john.doe@example.com",
   "password": "password123"
 }
 ```
 
-## Responses
+**Responses:**
+- **201 Created:** Returns JWT token and user details.
+- **400 Bad Request:** Validation error.
+- **500 Internal Server Error:** Server issue.
 
-### Success
-- **Status Code:** 201 Created
-- **Response Body:**
-  ```json
-  {
-    "token": "jwt_token_here",
-    "user": {
-      "_id": "user_id_here",
-      "fullname": {
-        "firstname": "John",
-        "lastname": "Doe"
-      },
-      "email": "john.doe@example.com"
-    }
-  }
-  ```
+### User Login
+**Endpoint:** `POST /users/login`
 
-### Validation Error
-- **Status Code:** 400 Bad Request
-- **Response Body:**
-  ```json
-  {
-    "errors": [
-      {
-        "msg": "Error message here",
-        "param": "field_name",
-        "location": "body"
-      }
-    ]
-  }
-  ```
+**Description:** Logs in an existing user.
 
-### Server Error
-- **Status Code:** 500 Internal Server Error
-- **Response Body:**
-  ```json
-  {
-    "message": "Internal server error"
-  }
-  ```
-
-# User Login Endpoint
-
-## Endpoint
-`POST /users/login`
-
-## Description
-This endpoint allows an existing user to log in by providing their email and password.
-
-## Request Body
-The request body should be a JSON object containing the following fields:
-- `email` (string, required): The email address of the user. Must be a valid email format.
-- `password` (string, required): The password for the user account. Must be at least 6 characters long.
-
-Example:
+**Request Body:**
 ```json
 {
   "email": "john.doe@example.com",
@@ -89,238 +34,102 @@ Example:
 }
 ```
 
-## Responses
+**Responses:**
+- **200 OK:** Returns JWT token and user details.
+- **400 Bad Request:** Validation error or invalid credentials.
+- **404 Not Found:** Invalid email or password.
+- **500 Internal Server Error:** Server issue.
 
-### Success
-- **Status Code:** 200 OK
-- **Response Body:**
-  ```json
-  {
-    "token": "jwt_token_here",
-    "user": {
-      "_id": "user_id_here",
-      "fullname": {
-        "firstname": "John",
-        "lastname": "Doe"
-      },
-      "email": "john.doe@example.com"
-    }
-  }
-  ```
+### User Profile
+**Endpoint:** `GET /users/profile`
 
-### Validation Error
-- **Status Code:** 400 Bad Request
-- **Response Body:**
-  ```json
-  {
-    "errors": [
-      {
-        "msg": "Error message here",
-        "param": "field_name",
-        "location": "body"
-      }
-    ]
-  }
-  ```
+**Description:** Retrieves user profile information.
 
-### Authentication Error
-- **Status Code:** 404 Not Found
-- **Response Body:**
-  ```json
-  {
-    "message": "Invalid mail or password"
-  }
-  ```
+**Request Headers:** `Authorization: Bearer <token>`
 
-### Invalid Credentials
-- **Status Code:** 400 Bad Request
-- **Response Body:**
-  ```json
-  {
-    "message": "Invalid credentials"
-  }
-  ```
+**Responses:**
+- **200 OK:** Returns user details.
+- **401 Unauthorized:** Missing or invalid token.
+- **500 Internal Server Error:** Server issue.
 
-### Server Error
-- **Status Code:** 500 Internal Server Error
-- **Response Body:**
-  ```json
-  {
-    "message": "Internal server error"
-  }
-  ```
+### User Logout
+**Endpoint:** `GET /users/logout`
 
-# User Profile Endpoint
+**Description:** Logs out an authenticated user.
 
-## Endpoint
-`GET /users/profile`
+**Request Headers:** `Authorization: Bearer <token>`
 
-## Description
-This endpoint allows an authenticated user to retrieve their profile information.
+**Responses:**
+- **200 OK:** Logout confirmation.
+- **401 Unauthorized:** Missing or invalid token.
+- **500 Internal Server Error:** Server issue.
 
-## Request Headers
-- `Authorization` (string, required): The JWT token for authentication.
+---
 
-## Responses
+## Captain Endpoints
 
-### Success
-- **Status Code:** 200 OK
-- **Response Body:**
-  ```json
-  {
-    "_id": "user_id_here",
-    "fullname": {
-      "firstname": "John",
-      "lastname": "Doe"
-    },
-    "email": "john.doe@example.com"
-  }
-  ```
+### Captain Registration
+**Endpoint:** `POST /captains/register`
 
-### Authentication Error
-- **Status Code:** 401 Unauthorized
-- **Response Body:**
-  ```json
-  {
-    "message": "Unauthorized"
-  }
-  ```
+**Description:** Registers a new captain.
 
-### Server Error
-- **Status Code:** 500 Internal Server Error
-- **Response Body:**
-  ```json
-  {
-    "message": "Internal server error"
-  }
-  ```
-
-# User Logout Endpoint
-
-## Endpoint
-`GET /users/logout`
-
-## Description
-This endpoint allows an authenticated user to log out.
-
-## Request Headers
-- `Authorization` (string, required): The JWT token for authentication.
-
-## Responses
-
-### Success
-- **Status Code:** 200 OK
-- **Response Body:**
-  ```json
-  {
-    "message": "Successfully logged out"
-  }
-  ```
-
-### Authentication Error
-- **Status Code:** 401 Unauthorized
-- **Response Body:**
-  ```json
-  {
-    "message": "Unauthorized"
-  }
-  ```
-
-### Server Error
-- **Status Code:** 500 Internal Server Error
-- **Response Body:**
-  ```json
-  {
-    "message": "Internal server error"
-  }
-  ```
-
-# Captain Registration Endpoint
-
-## Endpoint
-`POST /captains/register`
-
-## Description
-This endpoint allows a new captain to register by providing their first name, last name, email, password, and vehicle details. The password will be hashed before storing in the database.
-
-## Request Body
-The request body should be a JSON object containing the following fields:
-- `fullname.firstname` (string, required): The first name of the captain. Must be at least 3 characters long.
-- `fullname.lastname` (string, optional): The last name of the captain. Must be at least 3 characters long if provided.
-- `email` (string, required): The email address of the captain. Must be a valid email format.
-- `password` (string, required): The password for the captain account. Must be at least 6 characters long.
-- `vehicle.color` (string, required): The color of the vehicle. Must be at least 3 characters long.
-- `vehicle.plate` (string, required): The plate number of the vehicle. Must be at least 3 characters long.
-- `vehicle.capacity` (number, required): The capacity of the vehicle. Must be at least 1.
-- `vehicle.vehicleType` (string, required): The type of the vehicle. Must be one of 'car', 'motorcycle', or 'auto'.
-- `vehicle.model` (string, required): The model of the vehicle.
-
-Example:
+**Request Body:**
 ```json
 {
-  "fullname": {
-    "firstname": "John",
-    "lastname": "Doe"
-  },
+  "fullname": {"firstname": "John", "lastname": "Doe"},
   "email": "john.doe@example.com",
   "password": "password123",
   "vehicle": {
-    "color": "Red",
-    "plate": "ABC123",
-    "capacity": 4,
-    "vehicleType": "car",
-    "model": "Toyota"
+    "color": "Red", "plate": "ABC123", "capacity": 4,
+    "vehicleType": "car", "model": "Toyota"
   }
 }
 ```
 
-## Responses
+**Responses:**
+- **201 Created:** Returns JWT token and captain details.
+- **400 Bad Request:** Validation error.
+- **500 Internal Server Error:** Server issue.
 
-### Success
-- **Status Code:** 201 Created
-- **Response Body:**
-  ```json
-  {
-    "token": "jwt_token_here",
-    "captain": {
-      "_id": "captain_id_here",
-      "fullname": {
-        "firstname": "John",
-        "lastname": "Doe"
-      },
-      "email": "john.doe@example.com",
-      "vehicle": {
-        "color": "Red",
-        "plate": "ABC123",
-        "capacity": 4,
-        "vehicleType": "car",
-        "model": "Toyota"
-      }
-    }
-  }
-  ```
+### Captain Login
+**Endpoint:** `POST /captains/login`
 
-### Validation Error
-- **Status Code:** 400 Bad Request
-- **Response Body:**
-  ```json
-  {
-    "errors": [
-      {
-        "msg": "Error message here",
-        "param": "field_name",
-        "location": "body"
-      }
-    ]
-  }
-  ```
+**Description:** Logs in an existing captain.
 
-### Server Error
-- **Status Code:** 500 Internal Server Error
-- **Response Body:**
-  ```json
-  {
-    "message": "Internal server error"
-  }
-  ```
-  
+**Request Body:**
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+**Responses:**
+- **200 OK:** Returns JWT token and captain details.
+- **401 Unauthorized:** Invalid credentials.
+- **500 Internal Server Error:** Server issue.
+
+### Captain Profile
+**Endpoint:** `GET /captains/profile`
+
+**Description:** Retrieves captain profile information.
+
+**Request Headers:** `Authorization: Bearer <token>`
+
+**Responses:**
+- **200 OK:** Returns captain details.
+- **401 Unauthorized:** Missing or invalid token.
+- **500 Internal Server Error:** Server issue.
+
+### Captain Logout
+**Endpoint:** `GET /captains/logout`
+
+**Description:** Logs out an authenticated captain.
+
+**Request Headers:** `Authorization: Bearer <token>`
+
+**Responses:**
+- **200 OK:** Logout confirmation.
+- **401 Unauthorized:** Missing or invalid token.
+- **500 Internal Server Error:** Server issue.
+
