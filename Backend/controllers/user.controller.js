@@ -5,11 +5,12 @@ const blackListTokenModel = require('../models/blackListToken.model');
 
 
 
+//register a new user
 module.exports.registerUser = async(req, res, next ) => {
 
-  const errors = validationResult(req);
+  const errors = validationResult(req);               //check if there are any errors in the request 
 
-  if(!errors.isEmpty()){
+  if(!errors.isEmpty()){                          
     return res.status(400).json({ errors: errors.array() });
   }
 
