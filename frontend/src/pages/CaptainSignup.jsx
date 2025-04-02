@@ -16,7 +16,7 @@ const CaptainSignup = () => {
             e.preventDefault()
   
             setUserData({
-              username:{
+              fullName:{
                 firstName: firstName,
                 lastName: lastName
                   
@@ -35,16 +35,18 @@ const CaptainSignup = () => {
           }
   
   return (
-    <div className="py-7 px-5 h-screen flex flex-col justify-between ">
+    <div className="py-5 px-5 h-screen flex flex-col justify-between ">
     <div>
-    <img className='w-16 mb-10' src="https://www.svgrepo.com/show/505031/uber-driver.svg" alt="" />
+    <img className='w-20 mb-3' src="https://www.svgrepo.com/show/505031/uber-driver.svg" alt="" />
+   
     <form onSubmit={(e) => {
           submitHandler(e)
     }}>
 
 
-      <h3 className='text-lg w-1/2 font-medium mb-2'> What's your name</h3>
-      <div className='flex gap-4 mb-6'>
+      <h3 className='text-lg w-full font-medium mb-2'> What's Our Captain's name</h3>
+      <div className='flex gap-4 mb-7'>
+      
       <input 
       required
       value={firstName}
@@ -53,8 +55,9 @@ const CaptainSignup = () => {
       }} 
       type="text" 
       placeholder="First Name" 
-      className="bg-[#eeeeee] w-1/2 rounded px-4 py-2 border  text-lg placeholder:text-base"
+      className="bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border  text-lg placeholder:text-base"
       />
+       
        <input 
       required 
        value = {lastName}
@@ -67,7 +70,7 @@ const CaptainSignup = () => {
       />
       </div>
 
-      <h3 className="text-lg font-base mb-2">What's your email</h3>
+      <h3 className="text-lg font-base mb-2">What's Our Captain's email</h3>
       <input 
       required 
       value={email}
@@ -76,8 +79,9 @@ const CaptainSignup = () => {
       }}
       type="email" 
       placeholder="email@example.com" 
-      className="bg-[#eeeeee] mb-5 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
+      className="bg-[#eeeeee] mb-5 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base"
       />
+      
       <h3 className="text-lg font-medium mb-2">Enter Password</h3>
 
       <input required type="password" placeholder="password"
@@ -87,7 +91,7 @@ const CaptainSignup = () => {
         setPassword(e.target.value)
       }}
        
-        className="bg-[#eeeeee] mb-6 rounded px-4 py-2 border w-full text-base placeholder:text-base"
+        className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-base placeholder:text-base"
       />
       <button 
       className="bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg placeholder:text-base"

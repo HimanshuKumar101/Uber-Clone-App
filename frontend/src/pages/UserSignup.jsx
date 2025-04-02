@@ -17,7 +17,7 @@ const UserSignup = () => {
           e.preventDefault()
 
           setUserData({
-            username:{
+            fullName:{
               firstName: firstName,
               lastName: lastName
                 
@@ -45,7 +45,7 @@ const UserSignup = () => {
 
 
       <h3 className='text-lg w-1/2 font-medium mb-2'> What's your name</h3>
-      <div className='flex gap-4 mb-6'>
+      <div className='flex gap-4 mb-7'>
       <input 
       required
       value={firstName}

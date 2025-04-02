@@ -38,19 +38,22 @@ const Captainlogin = () => {
       onChange={(e) =>{                      //this is used to set the email state to the value of the input field  
         setEmail(e.target.value)            //e.target.value is the value of the input field e.target is the input field itself
       } }
+      className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
       type="email" 
       placeholder="email@example.com" 
-      className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
       />
       <h3 className="text-lg font-medium mb-2">Enter Password</h3>
 
-      <input required type="password" placeholder="password" 
+      <input 
+        className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
         value={password}                        
-      onChange={(e) =>{                      //this is used to set the email state to the value of the input field  
+        onChange={(e) => {                      //this is used to set the email state to the value of the input field  
         setPassword(e.target.value)            //e.target.value is the value of the input field e.target is the input field itself
       } }
-        className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
+       required type="password" 
+       placeholder="password" 
       />
+
       <button 
       className="bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg placeholder:text-base"
       type="submit">Login</button>
@@ -61,7 +64,7 @@ const Captainlogin = () => {
     <div>
       <Link
       to='/login'
-      className="bg-[#d5622d] mb-5 flex items-center justify-center text-white font-semibold mb-7 rounded px-4 py-2 w-full text-lg placeholder:text-base"
+      className="bg-[#d5622d] flex items-center justify-center text-white font-semibold mb-5 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base"
       type="submit" >Sign in as User</Link>
     </div>
   </div>
