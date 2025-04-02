@@ -17,7 +17,7 @@ const UserLogin = () => {
           email:email,
           password: password
         })
-        console.log(userData);
+      
          setEmail('')   //this is used to set the email state to the value
          setPassword('') //this is used to set the password state to the value of the input field
 

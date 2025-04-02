@@ -27,7 +27,6 @@ const UserSignup = () => {
             
           })
          
-          console.log(userData)
           setEmail('')
           setPassword('') 
           setFirstName('')
@@ -37,15 +36,15 @@ const UserSignup = () => {
 
 
   return (
-    <div className="p-7 h-screen flex flex-col justify-between ">
+    <div className="py-7 px-5 h-screen flex flex-col justify-between ">
     <div>
-    <img className='w-16 mb-10' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
+    <img className='w-16 mb-10' src="https://www.svgrepo.com/show/505031/uber-driver.svg" alt="" />
     <form onSubmit={(e) => {
           submitHandler(e)
     }}>
 
 
-      <h3 className='text-lg font-medium mb-2'> What's your name</h3>
+      <h3 className='text-lg w-1/2 font-medium mb-2'> What's your name</h3>
       <div className='flex gap-4 mb-6'>
       <input 
       required
@@ -99,8 +98,9 @@ const UserSignup = () => {
     <p className="text-center">Already have a account ? <Link to='/login ' className='text-blue-600'>Login Here</Link></p>
     </div>
     <div>
-      <p className='text-[10px] leading-tight'>By proceeding, you consent to get calls, whatsApp or SMS messages, including by automated means, form 
-         uber and affiliates to the number provided.</p>
+      <p className='text-[10px] leading-tight'>This site is protected by reCAPTCHA and the <span className = 'underline'
+      >Google Privacy Policy </span>
+         and  <span className='underline'>Terms of Service apply </span>.</p>
     </div>
   </div>
   )
