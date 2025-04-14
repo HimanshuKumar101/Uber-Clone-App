@@ -13,11 +13,11 @@ const Home = () => {
           <img className='h-full w-full object-cover' src = "https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="image"/>
 
       </div>
-      <div className='bg-white absolute top-0 w-full p-5 '>
+      <div className='bg-white absolute bottom-0 w-full p-5 '>
          <h4 className='text-2xl font-semibold'>Find a trip</h4>
          <form>
-             <input type="text" placeholder='Add a pick-up location'/>
-             <input type="text" placeholder='Enter your destination'/>
+             <input className='bg-[#eee] px-12 py-2 text-base rounded-lg w-full mt-5' type="text" placeholder='Add a pick-up location'/>
+             <input className='bg-[#eee] px-12 py-2 text-base rounded-lg w-full mt-5' type="text" placeholder='Enter your destination'/>
          </form>
 
       </div>
