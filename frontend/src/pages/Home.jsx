@@ -1,6 +1,8 @@
 import React from 'react'
 
 const Home = () => {
+
+  // This is the home page of the application. It contains a form to enter pick-up and drop-off locations.
   return (
     <div className='h-screen relative'>
       <img className='w-16 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
