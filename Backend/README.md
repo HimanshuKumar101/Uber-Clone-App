@@ -1,135 +1,218 @@
-# User and Captain API Documentation
+# Uber Clone Backend
 
-## User Endpoints
+This is the backend for the Uber Clone application. It provides APIs for user and captain registration, login, ride management, and map-related services.
 
-### User Registration
-**Endpoint:** `POST /users/register`
-
-**Description:** Registers a new user.
-
-**Request Body:**
-```json
-{
-  "fullname": {"firstname": "John", "lastname": "Doe"},
-  "email": "john.doe@example.com",
-  "password": "password123"
-}
-```
-
-**Responses:**
-- **201 Created:** Returns JWT token and user details.
-- **400 Bad Request:** Validation error.
-- **500 Internal Server Error:** Server issue.
-
-### User Login
-**Endpoint:** `POST /users/login`
-
-**Description:** Logs in an existing user.
-
-**Request Body:**
-```json
-{
-  "email": "john.doe@example.com",
-  "password": "password123"
-}
-```
-
-**Responses:**
-- **200 OK:** Returns JWT token and user details.
-- **400 Bad Request:** Validation error or invalid credentials.
-- **404 Not Found:** Invalid email or password.
-- **500 Internal Server Error:** Server issue.
-
-### User Profile
-**Endpoint:** `GET /users/profile`
-
-**Description:** Retrieves user profile information.
-
-**Request Headers:** `Authorization: Bearer <token>`
-
-**Responses:**
-- **200 OK:** Returns user details.
-- **401 Unauthorized:** Missing or invalid token.
-- **500 Internal Server Error:** Server issue.
-
-### User Logout
-**Endpoint:** `GET /users/logout`
-
-**Description:** Logs out an authenticated user.
-
-**Request Headers:** `Authorization: Bearer <token>`
-
-**Responses:**
-- **200 OK:** Logout confirmation.
-- **401 Unauthorized:** Missing or invalid token.
-- **500 Internal Server Error:** Server issue.
+## Table of Contents
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [API Endpoints](#api-endpoints)
+  - [User Routes](#user-routes)
+  - [Captain Routes](#captain-routes)
+  - [Ride Routes](#ride-routes)
+  - [Map Routes](#map-routes)
+- [Socket.IO Integration](#socketio-integration)
+- [Database](#database)
+- [License](#license)
 
 ---
 
-## Captain Endpoints
+## Installation
 
-### Captain Registration
-**Endpoint:** `POST /captains/register`
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd Uber-Clone/Backend
+   ```
 
-**Description:** Registers a new captain.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-**Request Body:**
-```json
-{
-  "fullname": {"firstname": "John", "lastname": "Doe"},
-  "email": "john.doe@example.com",
-  "password": "password123",
-  "vehicle": {
-    "color": "Red", "plate": "ABC123", "capacity": 4,
-    "vehicleType": "car", "model": "Toyota"
+3. Start the server:
+   ```bash
+   node server.js
+   ```
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the `/Backend` directory and configure the following variables:
+
+```plaintext
+PORT=4000
+DB_CONNECT=<your_mongodb_connection_string>
+JWT_SECRET=<your_jwt_secret>
+GOOGLE_MAPS_API=<your_google_maps_api_key>
+```
+
+---
+
+## API Endpoints
+
+### User Routes
+
+- **POST /users/register**  
+  Register a new user.  
+  **Request Body:**  
+  ```json
+  {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "password": "password123"
   }
-}
-```
+  ```
 
-**Responses:**
-- **201 Created:** Returns JWT token and captain details.
-- **400 Bad Request:** Validation error.
-- **500 Internal Server Error:** Server issue.
+- **POST /users/login**  
+  Login an existing user.  
+  **Request Body:**  
+  ```json
+  {
+    "email": "john.doe@example.com",
+    "password": "password123"
+  }
+  ```
 
-### Captain Login
-**Endpoint:** `POST /captains/login`
+- **GET /users/profile**  
+  Retrieve the profile of the authenticated user.
 
-**Description:** Logs in an existing captain.
+- **GET /users/logout**  
+  Logout the authenticated user.
 
-**Request Body:**
-```json
-{
-  "email": "john.doe@example.com",
-  "password": "password123"
-}
-```
+---
 
-**Responses:**
-- **200 OK:** Returns JWT token and captain details.
-- **401 Unauthorized:** Invalid credentials.
-- **500 Internal Server Error:** Server issue.
+### Captain Routes
 
-### Captain Profile
-**Endpoint:** `GET /captains/profile`
+- **POST /captains/register**  
+  Register a new captain.  
+  **Request Body:**  
+  ```json
+  {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "password": "password123",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car",
+      "model": "Toyota"
+    }
+  }
+  ```
 
-**Description:** Retrieves captain profile information.
+- **POST /captains/login**  
+  Login an existing captain.  
+  **Request Body:**  
+  ```json
+  {
+    "email": "john.doe@example.com",
+    "password": "password123"
+  }
+  ```
 
-**Request Headers:** `Authorization: Bearer <token>`
+- **GET /captains/profile**  
+  Retrieve the profile of the authenticated captain.
 
-**Responses:**
-- **200 OK:** Returns captain details.
-- **401 Unauthorized:** Missing or invalid token.
-- **500 Internal Server Error:** Server issue.
+- **GET /captains/logout**  
+  Logout the authenticated captain.
 
-### Captain Logout
-**Endpoint:** `GET /captains/logout`
+---
 
-**Description:** Logs out an authenticated captain.
+### Ride Routes
 
-**Request Headers:** `Authorization: Bearer <token>`
+- **POST /rides/create**  
+  Create a new ride request.  
+  **Request Body:**  
+  ```json
+  {
+    "pickup": "123 Main St",
+    "destination": "456 Elm St",
+    "vehicleType": "car"
+  }
+  ```
 
-**Responses:**
-- **200 OK:** Logout confirmation.
-- **401 Unauthorized:** Missing or invalid token.
-- **500 Internal Server Error:** Server issue.
+- **GET /rides/get-fare**  
+  Get the fare estimate for a ride.  
+  **Query Parameters:**  
+  - `pickup`: Pickup address  
+  - `destination`: Destination address  
 
+- **POST /rides/confirm**  
+  Confirm a ride by a captain.  
+  **Request Body:**  
+  ```json
+  {
+    "rideId": "ride_id_here"
+  }
+  ```
+
+- **GET /rides/start-ride**  
+  Start a ride.  
+  **Query Parameters:**  
+  - `rideId`: Ride ID  
+  - `otp`: OTP for the ride  
+
+- **POST /rides/end-ride**  
+  End a ride.  
+  **Request Body:**  
+  ```json
+  {
+    "rideId": "ride_id_here"
+  }
+  ```
+
+---
+
+### Map Routes
+
+- **GET /maps/get-coordinates**  
+  Get coordinates for an address.  
+  **Query Parameters:**  
+  - `address`: Address string  
+
+- **GET /maps/get-distance-time**  
+  Get distance and time between two locations.  
+  **Query Parameters:**  
+  - `origin`: Origin address  
+  - `destination`: Destination address  
+
+- **GET /maps/get-suggestions**  
+  Get autocomplete suggestions for a location.  
+  **Query Parameters:**  
+  - `input`: Input string  
+
+---
+
+## Socket.IO Integration
+
+The backend uses Socket.IO for real-time communication. Key events include:
+- **join**: Associates a user or captain with a socket ID.
+- **update-location-captain**: Updates the captain's location.
+- **new-ride**: Sends a new ride request to captains in the vicinity.
+- **ride-confirmed**: Notifies the user when a captain confirms the ride.
+- **ride-started**: Notifies the user when the ride starts.
+- **ride-ended**: Notifies the user when the ride ends.
+
+---
+
+## Database
+
+The backend uses MongoDB as the database. Key collections include:
+- **users**: Stores user information.
+- **captains**: Stores captain information.
+- **rides**: Stores ride details.
+- **blacklistTokens**: Stores blacklisted JWT tokens.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
