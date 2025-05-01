@@ -20,7 +20,7 @@ This is the backend for the Uber Clone application. It provides APIs for user an
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/HimanshuKumar101/Uber-Clone-App.git
    cd Uber-Clone/Backend
    ```
 
@@ -212,7 +212,3 @@ The backend uses MongoDB as the database. Key collections include:
 - **blacklistTokens**: Stores blacklisted JWT tokens.
 
 ---
-
-## License
-
-This project is licensed under the MIT License.
